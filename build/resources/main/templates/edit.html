@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dark Side of the Rainbow</title>
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{'/css/main.css'}">
+
+</head>
+
+<body>
+
+<div th:include="layout::header"></div>
+
+<section id="content">
+    <h1>Edit Album</h1>
+    <h2>Edit the details of the album</h2>
+
+    <form method="post" action="/edit-album">
+        <div class="form-group">
+            <label for="albumName">Album Name</label>
+            <input type="text" class="form-control" id="albumName" name="albumName" aria-describedby="albumNameHelp"
+                   placeholder="Enter album name" th:value="${album.albumName}">
+            <small id="albumNameHelp" class="form-=text text-muted">What is the name of the album?</small>
+        </div>
+        <div class="form-group">
+            <label for="artistName">Artist Name</label>
+            <input type="text" class="form-control" id="artistName" name="artistName" aria-describedby="artistNameHelp"
+                   placeholder="Enter artist name" th:value="${album.artistName}">
+            <small id="artistNameHelp" class="form-=text text-muted">What is the name of the artist?</small>
+        </div>
+
+<!--        TODO - fix date stuff-->
+        <div class="form-group">
+            <label for="releaseDate">Release Date</label>
+            <input type="date" class="form-control" id="releaseDate" name="releaseDate" aria-describedby="releaseDateHelp"
+                   placeholder="Enter release date" th:value="${album.dateReleased}">
+            <small id="releaseDateHelp" class="form-=text text-muted">What is the album release date?</small>
+        </div>
+        <div class="form-group">
+            <label for="albumGenre">Album Genre</label>
+            <input type="text" class="form-control" id="albumGenre" name="albumGenre" aria-describedby="albumGenreHelp"
+                   placeholder="Enter album genre" th:value="${album.genre}">
+            <small id="albumGenreHelp" class="form-=text text-muted">What is the genre of the album?</small>
+        </div>
+        <div class="form-group">
+            <label for="numTracks">Number of Tracks</label>
+            <input type="text" class="form-control" id="numTracks" name="numTracks" aria-describedby="numTracksHelp"
+                   placeholder="Enter number of tracks" th:value="${album.numTracks}">
+            <small id="numTracksHelp" class="form-=text text-muted">How many tracks are there?</small>
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="text" class="form-control" id="price" name="price" aria-describedby="priceHelp"
+                   placeholder="Enter album price" th:value="${album.price}">
+            <small id="priceHelp" class="form-=text text-muted">What is the album price?</small>
+        </div>
+        <input type="hidden" name="albumID" th:value="${album.albumID}">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="reset" class="btn btn-secondary">Clear</button>
+    </form>
+
+</section>
+
+<div th:include="layout::footer"></div>
+
+</body>
+
+</html>

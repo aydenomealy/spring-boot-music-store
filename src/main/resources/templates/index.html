@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dark Side of the Rainbow</title>
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" th:href="@{'/css/main.css'}">
+
+</head>
+
+<body>
+
+<div th:include="layout::header"></div>
+
+<section id="content">
+    <h1>Albums</h1>
+    <h2>Currently in stock</h2>
+
+    <table class="table table-hover table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Album ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Artist</th>
+            <th scope="col">Date Released</th>
+            <th scope="col">Genre</th>
+            <th scope="col">Number of Tracks</th>
+            <th scope="col">Price</th>
+            <th scope="col">&nbsp;</th>
+            <th scope="col">&nbsp;</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:unless="${albumList.isEmpty()}" th:each="album : ${albumList}">
+            <td scope="row" th:text="${album.albumID}"></td>
+            <td scope="row" th:text="${album.albumName}"></td>
+            <td scope="row" th:text="${album.artistName}"></td>
+            <td scope="row" th:text="${album.dateReleased}"></td>
+            <td scope="row" th:text="${album.genre}"></td>
+            <td scope="row" th:text="${album.numTracks}"></td>
+            <td scope="row" th:text="${album.price}"></td>
+
+            <td><a th:if="${#httpServletRequest.remoteUser}" th:href="@{'/albums/edit/' + ${album.albumID}}"
+                   title="Click here to edit the album details" class="btn btn-warning">Edit</a></td>
+            <td><a th:if="${#httpServletRequest.remoteUser}" th:href="@{'/albums/delete/' + ${album.albumID}}"
+                   title="Click here to delete the album" class="btn btn-danger">Delete</a></td>
+        </tr>
+
+        <tr th:if="${albumList.isEmpty()}">
+            <td colspan="6">No games were found.</td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <th:block th:if="${#httpServletRequest.remoteUser}">
+        <h3>Add a new Album</h3>
+        <form method="post" action="/">
+            <div class="form-group">
+                <label for="albumName">Album Name</label>
+                <input type="text" class="form-control" id="albumName" name="albumName" aria-describedby="albumNameHelp"
+                       placeholder="Enter album name">
+                <small id="albumNameHelp" class="form-=text text-muted">What is the name of the album?</small>
+            </div>
+            <div class="form-group">
+                <label for="artistName">Artist Name</label>
+                <input type="text" class="form-control" id="artistName" name="artistName"
+                       aria-describedby="artistNameHelp"
+                       placeholder="Enter artist name">
+                <small id="artistNameHelp" class="form-=text text-muted">What is the name of the artist?</small>
+            </div>
+            <div class="form-group">
+                <label for="releaseDate">Release Date</label>
+                <input type="date" class="form-control" id="releaseDate" name="releaseDate"
+                       aria-describedby="releaseDateHelp"
+                       placeholder="Enter release date">
+                <small id="releaseDateHelp" class="form-=text text-muted">What is the album release date?</small>
+            </div>
+            <div class="form-group">
+                <label for="albumGenre">Album Genre</label>
+                <input type="text" class="form-control" id="albumGenre" name="albumGenre"
+                       aria-describedby="albumGenreHelp"
+                       placeholder="Enter album genre">
+                <small id="albumGenreHelp" class="form-=text text-muted">What is the genre of the album?</small>
+            </div>
+            <div class="form-group">
+                <label for="numTracks">Number of Tracks</label>
+                <input type="text" class="form-control" id="numTracks" name="numTracks" aria-describedby="numTracksHelp"
+                       placeholder="Enter number of tracks">
+                <small id="numTracksHelp" class="form-=text text-muted">How many tracks are there?</small>
+            </div>
+            <div class="form-group">
+                <label for="price">Price</label>
+                <input type="text" class="form-control" id="price" name="price" aria-describedby="priceHelp"
+                       placeholder="Enter album price">
+                <small id="priceHelp" class="form-=text text-muted">What is the album price?</small>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-secondary">Clear</button>
+        </form>
+    </th:block>
+</section>
+
+<div th:include="layout::footer"></div>
+
+</body>
+
+</html>
